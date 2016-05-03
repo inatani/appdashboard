@@ -4,7 +4,7 @@
  */
 var express = require('express');
 var bodyParser = require('body-parser');
-var routes = require('./routes/index');
+var routes = require('./app/routes/index');
 var logger = require('morgan');
 var app = express();
 
@@ -24,7 +24,7 @@ app.all('/*', function(req, res, next) {
   }
 });
 
-app.all('/api/*', [require('./utilities/middleware')]);
+app.all('/api/*', [require('./app/utilities/middleware')]);
 
 app.use('/', routes);
 

@@ -5,11 +5,11 @@
  * Created by inatani on 5/4/16.
  */
 
-var app = require('../app');
+var app = require('../server');
 var debug = require('debug')('Development:server');
 var http = require('http');
 var mongoose = require('mongoose');
-var config = require('../utilities/config');
+var config = require('../app/utilities/config');
 
 var connect = function() {
   var options = {
