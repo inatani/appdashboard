@@ -9,7 +9,7 @@ var auth = {
   loginUser : function (req, res){
     var username = req.body.username || '';
     var password = req.body.password || '';
-
+//    console.log("usename is null right? -> "+req.body.username);
     if(username === '' || password === ''){
       res.status(401);
       res.json({
@@ -22,7 +22,7 @@ var auth = {
       'username' : username,
       'password' : password
     };
-
+//    console.log(JSON.stringify(userInfo));
     auth.validateUser(userInfo, function(err, result){
       if(err){
         res.status(401);
@@ -40,10 +40,11 @@ var auth = {
   validateUser : function (userInfo, callback){
     var username = userInfo.username;
     var password = userInfo.password;
-    userModel.findOne({emailID : username},function(err, user){
+    userModel.findOne({contact:{emailID : username}},function(err, user){
         if(err){
           throw err;
         }
+      console.log("user "+JSON.stringify(user));
       user.comparePassword(password, function(err, isMatch){
             if (err){
               throw err;

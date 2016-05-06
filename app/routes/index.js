@@ -13,7 +13,7 @@ var routes = {
 router.post('/login',routes.auth.loginUser);
 
 //user
-router.post('/api/user', routes.user.create);
+router.post('/api/user', routes.user.createUser);
 router.get('/api/user', routes.user.getAll);
 router.get('/api/user/:id',routes.user.getOne);
 router.put('/api/user/:id',routes.user.update);

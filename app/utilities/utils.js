@@ -12,9 +12,7 @@ function genToken(user){
 
   var filteredUser = {
     username : user.firstName + ' ' + user.lastName,
-    emailid : user.emailID,
-    role : user.role,
-    empid : user.empID
+    emailid : user.emailID
   };
 
   return {

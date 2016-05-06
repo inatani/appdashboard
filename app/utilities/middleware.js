@@ -12,7 +12,7 @@ var validateRequests = function(req, res, next){
   if (token || key){
     try{
       var decoded = jwt.decode(token, require('../utilities/secret'));
-      if(decoded.exp <=Date.now()){
+      if(decoded.exp <= Date.now()){
         res.state(400);
         res.json({
           'status' : 400,

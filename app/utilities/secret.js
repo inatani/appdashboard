@@ -4,5 +4,6 @@
  */
 
 module.exports = function() {
-  return process.env.APP_SECRET;
+//  return process.env.APP_SECRET;
+  return "secret"
 };

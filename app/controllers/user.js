@@ -7,8 +7,9 @@ var bcrypt = require('bcrypt');
 var SALT_WORK_FACTOR = 8;
 
 var UserController_ = {
-  create: function(req, res) {
+  createUser: function(req, res) {
     var register = req.body;
+//    console.log("data"+JSON.stringify(register));
     Models.User.findOne({
       emailID: register.emailID
     }, function(err, response) {
