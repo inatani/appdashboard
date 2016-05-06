@@ -10,6 +10,7 @@ var auth = {
     var username = req.body.username || '';
     var password = req.body.password || '';
 //    console.log("usename is null right? -> "+req.body.username);
+
     if(username === '' || password === ''){
       res.status(401);
       res.json({
@@ -40,7 +41,7 @@ var auth = {
   validateUser : function (userInfo, callback){
     var username = userInfo.username;
     var password = userInfo.password;
-    userModel.findOne({contact:{emailID : username}},function(err, user){
+    userModel.findOne({'contact.emailID' : username},function(err, user){
         if(err){
           throw err;
         }
@@ -58,13 +59,14 @@ var auth = {
         });
     });
   },
-  validate : function (emailID){
-    userModel.findOne({emailID : emailID}, function(err, user){
+  validate : function (emailID,cb){
+    userModel.findOne({'contact.emailID' : emailID}, function(err, user){
         if(err){
           throw err;
         }
         else{
-          return user;
+          cb(null,user);
+//          return user;
         }
     });
   }

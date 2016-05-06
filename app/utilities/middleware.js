@@ -2,16 +2,18 @@
 /**
  * Created by inatani on 5/4/16.
  */
-var jwt = require('jwt-simple');
-var validateUser = require('../controllers/auth').validateUser;
+var jsonToken = require('jwt-simple');
+var validateUser = require('../controllers/auth').validate;
 
 var validateRequests = function(req, res, next){
   var token = (req.body && req.body.accessToken) || (req.query && req.query.accessToken) ||(req.headers['x-access-token']);
   var key =  (req.body && req.body.xKey) || (req.query && req.query.xKey) ||(req.headers['x-key']);
-
+  console.log(token + " Key "+ key);
   if (token || key){
-    try{
-      var decoded = jwt.decode(token, require('../utilities/secret'));
+//    try {
+//      var decoded = jsonToken.decode(token, require('../utilities/secret'));
+    var decoded = jsonToken.decode(token, 'secret');
+      console.log("decoded " + decoded);
       if(decoded.exp <= Date.now()){
         res.state(400);
         res.json({
@@ -20,32 +22,35 @@ var validateRequests = function(req, res, next){
         });
         return;
       }
-      var loginUser = validateUser(key);
-      if(loginUser){
-        if(loginUser.emailID === key){
-          next();
+      var loginUser = validateUser(key,function(req, resp){
+        console.log("login user status "+ JSON.stringify(resp));
+        if(resp){
+          if(resp.contact.emailID === key){
+            next();
+          } else {
+            res.status(403);
+            res.json({
+              'status' : 403,
+              'message' : 'unauthorized user'
+            });
+            return;
+          }
         } else {
-          res.status(403);
+          res.status(401);
           res.json({
-            'status' : 403,
-            'message' : 'unauthorized user'
+            'status' : 401,
+            'message' : 'invalid user'
           });
-          return;
         }
-      } else {
-        res.status(401);
-        res.json({
-          'status' : 401,
-          'message' : 'invalid user'
-        });
-      }
-    } catch(err) {
-      res.status(500);
-      res.json({
-        'status' : 500,
-        'message' : 'Server Error'
+
       });
-    }
+//    } catch(err) {
+//      res.status(500);
+//      res.json({
+//        'status' : 500,
+//        'message' : err
+//      });
+//    }
   } else {
     res.status(401);
     res.json({
