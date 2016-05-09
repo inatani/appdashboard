@@ -9,7 +9,7 @@ var auth = {
   loginUser : function (req, res){
     var username = req.body.username || '';
     var password = req.body.password || '';
-//    console.log("usename is null right? -> "+req.body.username);
+//    console.log("usename -> "+req.body.username);
 
     if(username === '' || password === ''){
       res.status(401);
@@ -66,7 +66,6 @@ var auth = {
         }
         else{
           cb(null,user);
-//          return user;
         }
     });
   }
